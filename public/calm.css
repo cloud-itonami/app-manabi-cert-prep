@@ -1,0 +1,255 @@
+/* calm.css — anti-addiction UX primitives for manabi cert_prep
+ *
+ * Per ADR-2605264400 + ADR-2605261045 G3 (anti-addiction UX):
+ *   no transitions on engagement-coupled state, no animation on score/progress,
+ *   no red/orange urgency, no confetti/celebration, no leaderboard layout.
+ *
+ * Palette inspiration: 和紙 (paper-cream) + 墨 (sumi-ink) + 青磁 (celadon).
+ * Typography: system serif first (calmer than sans for long reading), monospace
+ * for code references only.
+ */
+
+:root {
+  --paper-cream: #f7f3ed;
+  --paper-deep: #efe9dd;
+  --sumi-ink: #2a2a2a;
+  --sumi-soft: #4a4a4a;
+  --sumi-muted: #6c6c6c;
+  --seiji-accent: #5a7f7f;
+  --seiji-quiet: #8aa8a8;
+  --rule-line: #d8d2c4;
+  --warning-paper: #e8e0c8;
+  --warning-ink: #6c5a2a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--paper-cream);
+  color: var(--sumi-ink);
+  font-family: ui-serif, "Hiragino Mincho ProN", "Yu Mincho", Georgia, serif;
+  line-height: 1.7;
+}
+
+body {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+header.calm-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--rule-line);
+  padding-bottom: 0.6rem;
+  margin-bottom: 2rem;
+  font-size: 0.95rem;
+}
+
+header.calm-header .title {
+  font-weight: 600;
+}
+
+header.calm-header nav a {
+  color: var(--sumi-soft);
+  text-decoration: none;
+  margin-left: 1.2rem;
+}
+
+header.calm-header nav a:hover {
+  color: var(--seiji-accent);
+}
+
+h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 1rem;
+}
+
+h2 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 2rem 0 0.6rem;
+  color: var(--sumi-soft);
+}
+
+h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 1.4rem 0 0.4rem;
+  color: var(--sumi-soft);
+}
+
+p {
+  margin: 0.6rem 0;
+}
+
+a {
+  color: var(--seiji-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+}
+
+a:hover {
+  color: var(--sumi-ink);
+}
+
+/* calm-card — the only "container" primitive
+ * Deliberately no shadow / no rounded animation / no hover-lift.
+ */
+.calm-card {
+  background: var(--paper-deep);
+  border: 1px solid var(--rule-line);
+  padding: 1.2rem 1.4rem;
+  margin: 1rem 0;
+}
+
+.calm-card .calm-card-title {
+  font-weight: 600;
+  margin: 0 0 0.4rem;
+}
+
+.calm-card .calm-card-meta {
+  color: var(--sumi-muted);
+  font-size: 0.88rem;
+  margin: 0.2rem 0 0;
+}
+
+/* calm-button — primary action only; no large urgent CTAs */
+.calm-button, button.calm-button {
+  display: inline-block;
+  background: var(--seiji-accent);
+  color: var(--paper-cream);
+  border: 0;
+  padding: 0.55rem 1.2rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+  cursor: pointer;
+  margin-top: 0.4rem;
+  margin-right: 0.4rem;
+  text-decoration: none;
+  border-radius: 2px;
+}
+
+.calm-button:hover, button.calm-button:hover {
+  background: var(--sumi-ink);
+  color: var(--paper-cream);
+}
+
+.calm-button.secondary {
+  background: transparent;
+  color: var(--seiji-accent);
+  border: 1px solid var(--seiji-accent);
+}
+
+.calm-button.secondary:hover {
+  background: var(--seiji-accent);
+  color: var(--paper-cream);
+}
+
+/* flat list — for domain selector + history. no chart, no progress bar */
+ul.calm-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+ul.calm-list li {
+  padding: 0.8rem 0;
+  border-bottom: 1px solid var(--rule-line);
+}
+
+ul.calm-list li:last-child {
+  border-bottom: 0;
+}
+
+ul.calm-list li .calm-list-domain {
+  font-weight: 600;
+}
+
+ul.calm-list li .calm-list-meta {
+  color: var(--sumi-muted);
+  font-size: 0.88rem;
+  margin-top: 0.2rem;
+}
+
+ul.calm-list li a {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+ul.calm-list li a:hover .calm-list-domain {
+  color: var(--seiji-accent);
+}
+
+/* concept reader body */
+article.concept-body {
+  margin: 1.5rem 0;
+}
+
+article.concept-body h3 {
+  margin-top: 1.6rem;
+}
+
+article.concept-body ul, article.concept-body ol {
+  padding-left: 1.4rem;
+}
+
+article.concept-body li {
+  margin: 0.3rem 0;
+}
+
+article.concept-body code {
+  background: var(--paper-deep);
+  padding: 0.1rem 0.35rem;
+  font-family: ui-monospace, "JetBrains Mono", Menlo, monospace;
+  font-size: 0.92em;
+  border-radius: 2px;
+}
+
+article.concept-body .ref {
+  color: var(--sumi-muted);
+  font-size: 0.88rem;
+}
+
+/* inline notice — calm tone, never red. */
+.calm-notice {
+  background: var(--warning-paper);
+  border-left: 3px solid var(--warning-ink);
+  padding: 0.8rem 1rem;
+  margin: 1.5rem 0;
+  font-size: 0.93rem;
+  color: var(--warning-ink);
+}
+
+footer.calm-footer {
+  margin-top: 4rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule-line);
+  color: var(--sumi-muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+footer.calm-footer a {
+  color: var(--sumi-soft);
+}
+
+/*
+ * What is DELIBERATELY ABSENT from this stylesheet (G3 enforcement):
+ *   - no @keyframes (no animation)
+ *   - no progress bar (no completion-as-reward visual)
+ *   - no streak / fire / flame iconography
+ *   - no badge / trophy / star
+ *   - no leaderboard layout (no rank columns)
+ *   - no red/orange urgency palette
+ *   - no countdown timer styling
+ *   - no transition on hover-lift (no engagement-bait micro-interactions)
+ */

@@ -1,0 +1,67 @@
+{
+  "@context": "https://etzhayyim.com/ns/kotodama/v1",
+  "@id": "did:web:manabi-cert-prep.etzhayyim.com",
+  "name": "manabi-cert-prep",
+  "nanoid": "mncprp01",
+  "project": "manabi",
+  "subProject": "cert_prep",
+  "runtimeType": "worker",
+  "performerType": "service",
+  "uiType": "calm-static",
+  "convoSystemPrompt": "You are the manabi cert_prep knowledge-domain study assistant for CISA/CISSP CBK material. You help adherents learn IT audit and information security concepts. You issue no credentials, predict no exam pass probability, and never reproduce official ISACA / (ISC)² past questions. You teach via Socratic dialogue (≥50%), cite NIST/ISO/COBIT sources, acknowledge uncertainty, and refuse praise language. Per ADR-2605264400 + ADR-2605261045.",
+  "profile": {
+    "displayName": "manabi · cert prep",
+    "description": "Adherent-facing CISA/CISSP knowledge-domain study PWA. Sub-cell of manabi master. R0 scaffold; W0+W1 static UI only (no LLM yet). Per ADR-2605264400.",
+    "avatar": "学",
+    "isBot": false,
+    "agentType": "advisory",
+    "operator": "etzhayyim",
+    "capabilities": [
+      "cbk-domain-concept-reading",
+      "synthetic-practice-question-generation-r1",
+      "encrypted-session-history-r1",
+      "personal-material-import-tier-c-r2"
+    ],
+    "protocols": ["xrpc"],
+    "advisoryOnly": true,
+    "embedDisabled": true,
+    "antiAddictionUx": true,
+    "antiCredentialism": true
+  },
+  "governance": {
+    "raci": "responsible",
+    "classification": "adherent-learning-history-encrypted",
+    "constitutionalGates": [
+      "G3-no-streak-no-leaderboard-no-badge-master-inherited",
+      "G6-minor-aggregate-only-master-inherited",
+      "G7-no-credential-issuance-master-inherited",
+      "G10-no-examination-coercion-master-inherited",
+      "G13-inquiry-based-pedagogy-master-inherited",
+      "G15-no-pass-rate-kpi-subcell",
+      "G16-no-official-past-question-reproduction-subcell",
+      "G17-no-credential-body-partnership-subcell",
+      "G14-substrate-boundary-r1-only"
+    ]
+  },
+  "triggers": {
+    "subscribeRepos": {
+      "collections": [
+        "com.etzhayyim.manabi.certPrepSession",
+        "com.etzhayyim.manabi.personalMaterialImport",
+        "com.etzhayyim.manabi.domainMasteryAttestation"
+      ]
+    }
+  },
+  "r0ScaffoldNoLlm": true,
+  "r1ActiveLexiconNsids": [
+    "com.etzhayyim.manabi.certPrepSession",
+    "com.etzhayyim.manabi.domainMasteryAttestation"
+  ],
+  "r2GatedLexiconNsids": [
+    "com.etzhayyim.manabi.personalMaterialImport"
+  ],
+  "siblingApps": ["mitate-pwa"],
+  "parentActor": "did:web:etzhayyim.com:manabi",
+  "license": "Apache-2.0 + etzhayyim Charter Compliance Rider v2.0",
+  "adrs": ["2605264400", "2605261045", "2605181100", "2605215000", "2605262400", "2605262800", "2605260100"]
+}

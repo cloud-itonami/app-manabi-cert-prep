@@ -1,0 +1,19 @@
+{
+  "name": "manabi-cert-prep",
+  "version": "0.1.0-r0-scaffold-only",
+  "private": true,
+  "type": "module",
+  "description": "manabi cert_prep adherent-facing knowledge-domain study PWA for CISA/CISSP. R0 scaffold; W0+W1 = static UI only, no LLM. Per ADR-2605264400 (sub-charter under manabi master ADR-2605261045). License: Apache-2.0 + etzhayyim Charter Compliance Rider v2.0.",
+  "license": "Apache-2.0",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "dev": "wrangler dev"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.0.0",
+    "@types/node": "^25.9.1",
+    "typescript": "^6.0.2",
+    "vitest": "^4.1.0"
+  }
+}

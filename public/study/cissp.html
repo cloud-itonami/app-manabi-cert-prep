@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CISSP · manabi cert prep</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="stylesheet" href="/calm.css">
+</head>
+<body>
+  <header class="calm-header">
+    <span class="title"><a href="/" style="text-decoration:none;color:inherit;">manabi · cert prep</a></span>
+    <nav>
+      <a href="/domains.html">domains</a>
+      <a href="/history.html">history</a>
+    </nav>
+  </header>
+
+  <h1>CISSP · CBK 8 domains</h1>
+
+  <p>
+    CISSP (Certified Information Systems Security Professional) は (ISC)² が発行する infosec の
+    credential です。このページは <strong>credential 取得を目的としない</strong> — religious-corp
+    の Murakumo fleet operator / encrypted envelope key custodian / Transparent Force open-source
+    review 等の steward 役職で実際に役立つ知識を学ぶための substrate です。
+  </p>
+
+  <div class="calm-notice">
+    出典: 各 domain の概念解説は <strong>NIST SP 800-series</strong> /
+    <strong>ISO 27001/27002 / FIPS 140-3</strong> / <strong>OWASP / OAuth/OIDC/SAML 仕様</strong> /
+    <strong>GDPR / APPI / CCPA / Geneva Convention IHL</strong> 等の公開仕様から構成しています。
+    (ISC)² Official Study Guide や CAT engine の reproduction はありません (G16)。
+  </div>
+
+  <h2 id="d1">Domain 1 — Security and Risk Management</h2>
+
+  <article class="concept-body">
+    <h3>CIA triad と AAA</h3>
+    <p>
+      情報セキュリティの根本 3 性質は <strong>Confidentiality</strong> (機密性),
+      <strong>Integrity</strong> (完全性), <strong>Availability</strong> (可用性) — CIA triad。
+      これと並行して identity 層では <strong>Authentication</strong> (誰か),
+      <strong>Authorization</strong> (何をしてよいか), <strong>Accountability</strong> (誰が何をしたかの記録)
+      の AAA。religious-corp の did:web + WebAuthn passkey + Adherent SBT は AAA の religious-corp 実装。
+    </p>
+    <h3>リスク管理プロセス</h3>
+    <p>
+      NIST RMF (Risk Management Framework, SP 800-37 R2) は 7 ステップ: Prepare → Categorize → Select →
+      Implement → Assess → Authorize → Monitor。CISSP D1 はこれと ISO 27005 を比較概念として扱います。
+      religious-corp 文脈では Charter Rider §2 scan が Authorize 段階の代理、kotoba-datomic attestation が
+      Monitor の継続的証拠です。
+    </p>
+    <h3>法令とプライバシー</h3>
+    <p>
+      GDPR (EU 2016/679) / APPI (日本個人情報保護法) / CCPA (California) / LGPD (Brazil) の 4 大プライバシー
+      法制は data subject rights (access / rectification / erasure / portability / objection) の枠組みで概念的に統合可能。
+      religious-corp の chigiri.data_privacy cell は DSAR ルーティングを担います (ADR-2605262700)。
+    </p>
+    <p class="ref">参考: NIST SP 800-37 R2, ISO 27005:2022, GDPR Article 6/7/15-21,
+      ADR-2605262700 chigiri data_privacy, ADR-2605262800 legal corpus W1</p>
+    <p>
+      <button class="calm-button"
+              data-cert-pathway="cissp"
+              data-domain="cissp-d1"
+              data-record-concept="d1-cia-aaa-rmf">
+        この概念を読んだことを記録
+      </button>
+    </p>
+  </article>
+
+  <h2 id="d2">Domain 2 — Asset Security</h2>
+
+  <article class="concept-body">
+    <h3>data lifecycle</h3>
+    <p>
+      ISO 27002 §5.9-5.13 は asset の lifecycle を create → store → use → share → archive → destroy の
+      6 段階で扱います。各段階で異なる control が要求されます (例: store では encryption-at-rest,
+      destroy では cryptographic erasure)。
+    </p>
+    <h3>ownership と responsibility</h3>
+    <p>
+      <strong>data owner</strong> (business 責任者) vs <strong>data custodian</strong> (IT 運用責任者) の
+      区別は CISSP の頻出概念です。owner は classification と access policy を決め、custodian は
+      technical control を運用します。religious-corp では Council Lv6+ が owner、cell operator が
+      custodian に近い役割分担。
+    </p>
+    <p class="ref">参考: ISO 27002:2022 §5.9-5.13, NIST SP 800-88 R1 media sanitization</p>
+    <p>
+      <button class="calm-button"
+              data-cert-pathway="cissp"
+              data-domain="cissp-d2"
+              data-record-concept="d2-data-lifecycle-ownership">
+        この概念を読んだことを記録
+      </button>
+    </p>
+  </article>
+
+  <h2 id="d3">Domain 3 — Security Architecture and Engineering</h2>
+
+  <article class="concept-body">
+    <h3>secure design principles</h3>
+    <p>
+      Saltzer &amp; Schroeder 1975 の 8 原則は今日も生きています:
+      economy of mechanism / fail-safe defaults / complete mediation / open design /
+      separation of privilege / least privilege / least common mechanism / psychological acceptability。
+      NIST SP 800-160 v1 はこれを現代的にリフレームしています。<em>open design</em> は religious-corp の
+      Charter Rider §2(e) 反 gatekeeping と直接共鳴します。
+    </p>
+    <h3>暗号 primitives</h3>
+    <p>
+      FIPS 140-3 は cryptographic module の評価標準 (Level 1-4)。AES-GCM / ChaCha20-Poly1305 は
+      AEAD (Authenticated Encryption with Associated Data); Ed25519 (RFC 8032) は EdDSA 署名;
+      X25519 (RFC 7748) は ECDH 鍵交換。religious-corp は XChaCha20-Poly1305 + Ed25519 + X25519 を
+      ADR-2605181100 で構造的に採用しています。
+    </p>
+    <h3>hardware-rooted trust</h3>
+    <p>
+      TPM 2.0 (ISO/IEC 11889) / Intel SGX / AMD SEV / ARM TrustZone は hardware root-of-trust の
+      代表例。religious-corp の Murakumo fleet (ADR-2605215000) は Apple Silicon Secure Enclave
+      + AMD AI Max+395 platform key を hardware trust anchor として活用する設計です。
+    </p>
+    <p class="ref">参考: Saltzer &amp; Schroeder 1975, NIST SP 800-160 v1, FIPS 140-3,
+      RFC 8032 + RFC 7748, ADR-2605181100 encrypted envelope</p>
+    <p>
+      <button class="calm-button"
+              data-cert-pathway="cissp"
+              data-domain="cissp-d3"
+              data-record-concept="d3-secure-design-crypto">
+        この概念を読んだことを記録
+      </button>
+    </p>
+  </article>
+
+  <h2 id="d4">Domain 4 — Communication and Network Security</h2>
+
+  <article class="concept-body">
+    <h3>OSI model 概念</h3>
+    <p>
+      7 層 (Physical / Data Link / Network / Transport / Session / Presentation / Application) は
+      今日 TCP/IP 4 層に簡約することが多いですが、各層に対応する security control を整理する map
+      として CISSP では依然有用です。例: L3 IPsec / L4 TLS / L7 アプリケーション認証。
+    </p>
+    <h3>TLS 1.3</h3>
+    <p>
+      RFC 8446 (TLS 1.3) は 1-RTT handshake + AEAD-only cipher suite + 0-RTT (early data, replay risk あり)
+      で TLS 1.2 から大きく整理されました。Perfect Forward Secrecy が default、RSA key exchange は廃止。
+      religious-corp の did:web は HTTPS 必須なので TLS 1.3 が事実上のベースラインです。
+    </p>
+    <p class="ref">参考: RFC 8446, NIST SP 800-52 R2 TLS guidance</p>
+    <p>
+      <button class="calm-button"
+              data-cert-pathway="cissp"
+              data-domain="cissp-d4"
+              data-record-concept="d4-osi-tls13">
+        この概念を読んだことを記録
+      </button>
+    </p>
+  </article>
+
+  <h2 id="d5">Domain 5 — Identity and Access Management</h2>
+
+  <article class="concept-body">
+    <h3>federation protocols</h3>
+    <p>
+      <strong>SAML 2.0</strong> (OASIS 2005, XML-based, enterprise SSO),
+      <strong>OAuth 2.0</strong> (RFC 6749, authorization framework),
+      <strong>OIDC</strong> (OpenID Connect, OAuth 上の authentication layer)。religious-corp の did:web +
+      WebAuthn は OIDC と互換的に動くよう設計可能 (ADR-2605231525)。
+    </p>
+    <h3>WebAuthn / Passkey</h3>
+    <p>
+      WebAuthn (W3C 2019) は public-key cryptography ベースの passwordless authentication 標準。
+      Passkey は WebAuthn credential を device 間で同期可能にしたエコシステム実装。phishing-resistant
+      が最大の利点。religious-corp Adherent identity は passkey + DID binding が default です。
+    </p>
+    <p class="ref">参考: OASIS SAML 2.0, RFC 6749, OpenID Connect Core 1.0, W3C WebAuthn L3</p>
+    <p>
+      <button class="calm-button"
+              data-cert-pathway="cissp"
+              data-domain="cissp-d5"
+              data-record-concept="d5-federation-webauthn">
+        この概念を読んだことを記録
+      </button>
+    </p>
+  </article>
+
+  <h2 id="d6">Domain 6 — Security Assessment and Testing</h2>
+
+  <article class="concept-body">
+    <h3>テスト種別</h3>
+    <p>
+      <strong>vulnerability scanning</strong> (automated, signature-based),
+      <strong>penetration testing</strong> (manual + creative, NIST SP 800-115),
+      <strong>code review</strong> (static analysis + manual),
+      <strong>red team</strong> (objective-based, multi-stage),
+      <strong>blue team</strong> (defense practice),
+      <strong>purple team</strong> (collaborative red + blue)。religious-corp 文脈では bug bounty 的な
+      open-source 公開 review (Charter Rider §2(e) 適用) が中心スタンス。
+    </p>
+    <h3>脆弱性管理ライフサイクル</h3>
+    <p>
+      discovery → triage (CVSS scoring) → prioritization → remediation → verification → reporting。
+      CVSS v3.1 / v4.0 は Base + Temporal + Environmental の 3 metric group。
+    </p>
+    <p class="ref">参考: NIST SP 800-115, FIRST CVSS v3.1 specification</p>
+    <p>
+      <button class="calm-button"
+              data-cert-pathway="cissp"
+              data-domain="cissp-d6"
+              data-record-concept="d6-testing-vuln-mgmt">
+        この概念を読んだことを記録
+      </button>
+    </p>
+  </article>
+
+  <h2 id="d7">Domain 7 — Security Operations</h2>
+
+  <article class="concept-body">
+    <h3>incident response</h3>
+    <p>
+      NIST SP 800-61 R2 は IR を 4 phase で扱います: preparation / detection &amp; analysis /
+      containment, eradication, recovery / post-incident activity。religious-corp の kazaori
+      (ADR-2605263200) は civilian disaster response の religious-corp 実装で、
+      IR の隣接 domain として概念共有があります。
+    </p>
+    <h3>forensics 概念</h3>
+    <p>
+      <strong>chain of custody</strong> (証拠物の取扱記録の連続性) と
+      <strong>order of volatility</strong> (RFC 3227: 揮発性の高い順から保全 — CPU register / cache →
+      RAM → swap → disk → remote logs → archival media) が forensics の基本。
+    </p>
+    <p class="ref">参考: NIST SP 800-61 R2, RFC 3227, ADR-2605263200 kazaori 災害対応</p>
+    <p>
+      <button class="calm-button"
+              data-cert-pathway="cissp"
+              data-domain="cissp-d7"
+              data-record-concept="d7-ir-forensics">
+        この概念を読んだことを記録
+      </button>
+    </p>
+  </article>
+
+  <h2 id="d8">Domain 8 — Software Development Security</h2>
+
+  <article class="concept-body">
+    <h3>secure SDLC</h3>
+    <p>
+      NIST SSDF (Secure Software Development Framework, SP 800-218) は 4 practice group: Prepare the
+      Organization / Protect the Software / Produce Well-Secured Software / Respond to Vulnerabilities。
+      religious-corp の Pregel cell ADR + Charter Rider §2 scan + e7m verify pre-commit hook
+      が SSDF practice の religious-corp 実装に対応します。
+    </p>
+    <h3>OWASP Top 10</h3>
+    <p>
+      2021 版 (current): A01 Broken Access Control / A02 Cryptographic Failures / A03 Injection /
+      A04 Insecure Design / A05 Security Misconfiguration / A06 Vulnerable &amp; Outdated Components /
+      A07 Identification &amp; Authentication Failures / A08 Software and Data Integrity Failures /
+      A09 Security Logging and Monitoring Failures / A10 Server-Side Request Forgery。
+    </p>
+    <h3>supply chain</h3>
+    <p>
+      SBOM (Software Bill of Materials, NTIA / SPDX / CycloneDX) は supply chain integrity の
+      要石。religious-corp の deps.toml は SBOM の機能を一部担います (modules + adrs registry)。
+    </p>
+    <p class="ref">参考: NIST SP 800-218 SSDF, OWASP Top 10:2021, CycloneDX 1.6</p>
+    <p>
+      <button class="calm-button"
+              data-cert-pathway="cissp"
+              data-domain="cissp-d8"
+              data-record-concept="d8-ssdf-owasp-sbom">
+        この概念を読んだことを記録
+      </button>
+    </p>
+  </article>
+
+  <footer class="calm-footer">
+    <p><a href="/">← entry</a> · <a href="/domains.html">domain 一覧</a> · <a href="/history.html">履歴を見る</a></p>
+  </footer>
+
+  <script src="/calm.js"></script>
+</body>
+</html>

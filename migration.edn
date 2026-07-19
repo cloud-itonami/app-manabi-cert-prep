@@ -1,0 +1,1 @@
+{:schema "etzhayyim.migration/v1" :source {:repository "etzhayyim/root" :revision "168497bd668c8d081fbeb32a0df24d9514075686" :path "60-apps/manabi-cert-prep" :tree "883f8ca32148611c4607e9f1faf903dbe7978bd8" :tracked-files 19 :bytes 118238} :destination {:repository "etzhayyim/com-etzhayyim-app-manabi-cert-prep"} :identity {:allowed-additions ["README.edn" "migration.edn"]}}

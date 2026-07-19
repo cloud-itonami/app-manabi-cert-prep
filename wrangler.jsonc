@@ -1,0 +1,32 @@
+{
+  "name": "manabi-cert-prep",
+  "main": "src/app.ts",
+  "compatibility_date": "2026-05-26",
+  "compatibility_flags": ["nodejs_compat", "nodejs_als"],
+  "vars": {
+    "APP_NANOID": "mncprp01",
+    "APP_DISPLAY_NAME": "manabi · cert prep",
+    "APP_DESCRIPTION": "manabi cert_prep adherent-facing knowledge-domain study PWA for CISA/CISSP. Static UI W0+W1 (no LLM yet).",
+    "APP_FRAMEWORK": "worker-edge-thin-dispatcher",
+    "APP_PERFORMER_TYPE": "service",
+    "APP_UI_TYPE": "calm-static",
+    "MANABI_CERT_PREP_R1_PHASE_GATE": "locked",
+    "MURAKUMO_LITELLM_GATEWAY_URL": "http://127.0.0.1:4000"
+  },
+  "routes": [
+    {
+      "pattern": "manabi-cert-prep.etzhayyim.com/*",
+      "zone_name": "etzhayyim.com"
+    },
+    {
+      "pattern": "mncprp01.etzhayyim.com/*",
+      "zone_name": "etzhayyim.com"
+    }
+  ],
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  }
+}

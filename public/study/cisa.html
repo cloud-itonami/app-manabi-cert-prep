@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CISA · manabi cert prep</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="stylesheet" href="/calm.css">
+</head>
+<body>
+  <header class="calm-header">
+    <span class="title"><a href="/" style="text-decoration:none;color:inherit;">manabi · cert prep</a></span>
+    <nav>
+      <a href="/domains.html">domains</a>
+      <a href="/history.html">history</a>
+    </nav>
+  </header>
+
+  <h1>CISA · CBK 5 domains</h1>
+
+  <p>
+    CISA (Certified Information Systems Auditor) は ISACA が発行する IT 監査の credential です。
+    このページは <strong>credential 取得を目的としない</strong> — IT 監査の概念を、religious-corp の
+    charters_compliance reviewer / toritate ledger 監査 / chigiri.data_privacy DSAR 監査 等の
+    steward 役職で実際に役立つ知識として学ぶための substrate です。
+  </p>
+
+  <div class="calm-notice">
+    出典: 各 domain の概念解説は <strong>NIST SP 800-series</strong> /
+    <strong>ISO 19011 / 27001 / 27002 / 38500 / 22301</strong> /
+    <strong>COBIT 2019 framework descriptions</strong> /
+    <strong>GDPR / APPI / CCPA</strong> 等の公開仕様から構成しています。
+    ISACA Review Manual や official practice questions は再現していません (G16)。
+  </div>
+
+  <h2 id="d1">Domain 1 — Information Systems Auditing Process</h2>
+
+  <article class="concept-body">
+    <h3>監査の目的と独立性</h3>
+    <p>
+      IS 監査の中心目的は <strong>statement of control effectiveness</strong> ——
+      内部統制が設計通りに運用されているか、運用結果が business objective を支えているか、
+      を <em>independent</em> な立場から評価することにあります。独立性 (independence) は
+      <strong>organizational</strong> (報告ライン上の独立) と <strong>personal</strong>
+      (利害関係なし) の二層で評価され、後者は ISO 19011 §4 で a) 公平性 + b) 倫理的行動 + c)
+      機密保持 + d) due professional care の 4 原則として明文化されています。
+    </p>
+    <h3>監査計画 (risk-based audit planning)</h3>
+    <p>
+      現代の IS 監査は <strong>risk-based</strong> アプローチが標準です。NIST SP 800-30 R1 の
+      用語で言えば <em>inherent risk</em> (内在的リスク) と <em>residual risk</em> (統制後残余リスク)
+      の差分が <em>control reliance</em> の根拠になります。監査計画フェーズで:
+    </p>
+    <ul>
+      <li>業務領域の <strong>materiality</strong> (重要性) を定量・定性で評価</li>
+      <li>領域ごとの <strong>inherent risk</strong> を {Likelihood × Impact} で粗評価</li>
+      <li>既存統制を mapping して <strong>residual risk</strong> を推定</li>
+      <li>残余リスクが acceptable threshold を超える領域に audit effort を割り当てる</li>
+    </ul>
+    <h3>監査証拠 (audit evidence)</h3>
+    <p>
+      ISACA は監査証拠を 4 つの quality 軸で評価します: <em>sufficiency</em> (量),
+      <em>reliability</em> (信頼性 — 例えば third-party source > internal source),
+      <em>relevance</em> (関連性), <em>usefulness</em> (有用性)。Inquiry-only ではなく、
+      <strong>inspection + observation + reperformance + analytical procedures</strong> を
+      組み合わせて triangulate するのが基本です。
+    </p>
+    <h3>religious-corp での適用</h3>
+    <p>
+      religious-corp 文脈では、charters_compliance reviewer の役割が CISA Domain 1 の応用です:
+      ChartersComplianceRegistry の attestation flow を on-chain で監査し、Council Lv6+ ≥3 の
+      署名が揃っているか、Charter Rider §2 scan の lint 結果が pass しているかを independence
+      を保って verify します。kotoba-datomic attestation lineage は audit evidence の reliability
+      を構造的に高めます (改竄不可 + replayable)。
+    </p>
+    <p class="ref">参考: NIST SP 800-30 R1, ISO 19011:2018 §4-§6, ADR-2605192100 §1.6 中間排除</p>
+    <p>
+      <button class="calm-button"
+              data-cert-pathway="cisa"
+              data-domain="cisa-d1"
+              data-record-concept="d1-audit-process-overview">
+        この概念を読んだことを記録 (このブラウザのみ)
+      </button>
+    </p>
+  </article>
+
+  <h2 id="d2">Domain 2 — Governance and Management of IT</h2>
+
+  <article class="concept-body">
+    <h3>governance vs management</h3>
+    <p>
+      ISO/IEC 38500 と COBIT 2019 は両方とも <strong>governance</strong> (方向付け + 監視 + 評価; "EDM"
+      = Evaluate / Direct / Monitor) と <strong>management</strong> (計画 + 構築 + 運用 + 監視;
+      "PBRM" = Plan / Build / Run / Monitor) を明確に分けます。
+      governance は <em>board-level</em>、management は <em>executive-level</em> の概念
+      ということです。religious-corp 対応で言えば、Council Lv6+ が governance、各 cell の
+      operator が management に相当します。
+    </p>
+    <h3>IT strategy alignment</h3>
+    <p>
+      Strategic alignment は business strategy ↔ IT strategy の双方向 traceability を要求します。
+      COBIT 2019 の <em>Goals Cascade</em> はこれを 4 階層 (Stakeholder Needs → Enterprise Goals
+      → Alignment Goals → Governance/Management Objectives) でモデル化しています。
+    </p>
+    <h3>リスク管理フレームワーク</h3>
+    <p>
+      NIST SP 800-39 (Risk Management) は組織を 3 階層 (organization / business process / IS) で見て、
+      上位階層の risk tolerance が下位階層の control selection を縛る、という構造です。
+      religious-corp では Charter Rider §2(a)-(h) が <strong>organization-level risk tolerance</strong>
+      に相当し、各 actor (yakushi, iyashi, etc.) の cell control 設計がそれを継承します。
+    </p>
+    <p class="ref">参考: ISO/IEC 38500:2015, COBIT 2019 framework (ISACA 公開 overview),
+      NIST SP 800-39, ADR-2605192100 §1 mission charter</p>
+    <p>
+      <button class="calm-button"
+              data-cert-pathway="cisa"
+              data-domain="cisa-d2"
+              data-record-concept="d2-governance-vs-management">
+        この概念を読んだことを記録
+      </button>
+    </p>
+  </article>
+
+  <h2 id="d3">Domain 3 — Information Systems Acquisition, Development and Implementation</h2>
+
+  <article class="concept-body">
+    <h3>SDLC controls</h3>
+    <p>
+      Software/System Development Life Cycle (SDLC) の各フェーズ (requirements → design →
+      implementation → testing → deployment → maintenance) に対応する control set が
+      NIST SP 800-160 v1 にまとまっています。CISA Domain 3 は SDLC の <em>audit</em>
+      観点 — 各フェーズの control が effective に運用されているかを検証する視点 — を扱います。
+    </p>
+    <h3>変更管理 (change management)</h3>
+    <p>
+      ITIL v4 の change enablement プラクティスは change を 3 種類に分類します:
+      <em>standard</em> (低リスク・事前承認済), <em>normal</em> (CAB レビュー要),
+      <em>emergency</em> (緊急対応 + 事後レビュー)。各クラスごとの required evidence trail
+      が監査ポイントです。
+    </p>
+    <h3>religious-corp での適用</h3>
+    <p>
+      religious-corp の Pregel cell ADR は SDLC + change management を on-chain で構造化したものに
+      相当します: ADR が requirements + design 、cell の R0→R3 phasing が implementation gating、
+      Council Lv6+ ratify が CAB review、deps.toml が configuration management baseline です。
+    </p>
+    <p class="ref">参考: NIST SP 800-160 v1, ITIL 4 Foundation guide (公開 overview)</p>
+    <p>
+      <button class="calm-button"
+              data-cert-pathway="cisa"
+              data-domain="cisa-d3"
+              data-record-concept="d3-sdlc-overview">
+        この概念を読んだことを記録
+      </button>
+    </p>
+  </article>
+
+  <h2 id="d4">Domain 4 — Information Systems Operations and Business Resilience</h2>
+
+  <article class="concept-body">
+    <h3>BCP / DR</h3>
+    <p>
+      ISO 22301:2019 (Business Continuity Management Systems) は BCP の中心指標として
+      <strong>RTO</strong> (Recovery Time Objective — 復旧目標時間) と
+      <strong>RPO</strong> (Recovery Point Objective — 復旧時点目標、許容データ損失量) を定義します。
+      BIA (Business Impact Analysis) で各業務の RTO/RPO を決め、DR architecture (cold / warm / hot
+      site, multi-region active-active 等) を選択します。
+    </p>
+    <h3>運用統制</h3>
+    <p>
+      NIST SP 800-53 の OPS family (incident response, contingency planning, system &amp; information
+      integrity 等) が代表的な運用統制カタログです。religious-corp の Murakumo fleet 運用 (ADR-2605215000)
+      は SP 800-53 CP (Contingency Planning) と IR (Incident Response) の religious-corp 適用例として
+      位置づけられます。
+    </p>
+    <p class="ref">参考: ISO 22301:2019 (overview), NIST SP 800-53 R5 OPS/CP/IR families,
+      NIST SP 800-34 R1 contingency planning guide</p>
+    <p>
+      <button class="calm-button"
+              data-cert-pathway="cisa"
+              data-domain="cisa-d4"
+              data-record-concept="d4-bcp-dr-overview">
+        この概念を読んだことを記録
+      </button>
+    </p>
+  </article>
+
+  <h2 id="d5">Domain 5 — Protection of Information Assets</h2>
+
+  <article class="concept-body">
+    <h3>access control models</h3>
+    <p>
+      代表的 model: <strong>DAC</strong> (Discretionary Access Control — owner-controlled),
+      <strong>MAC</strong> (Mandatory Access Control — system-policy-enforced, Bell-LaPadula 等),
+      <strong>RBAC</strong> (Role-Based — ANSI INCITS 359-2012),
+      <strong>ABAC</strong> (Attribute-Based — NIST SP 800-162)。religious-corp の 1-SBT-1-vote は
+      ABAC の religious-corp 適用 (attribute = Adherent SBT 所持状態) と捉えられます。
+    </p>
+    <h3>暗号化</h3>
+    <p>
+      対称暗号 (AES-256-GCM, ChaCha20-Poly1305) と非対称暗号 (RSA, ECDSA, Ed25519) の使い分け、
+      鍵管理 (KMS, HSM, key rotation), perfect forward secrecy など。ADR-2605181100 の
+      XChaCha20-Poly1305 envelope は religious-corp の confidentiality 統制の中核です。
+    </p>
+    <h3>data classification</h3>
+    <p>
+      ISO 27002 §5.12 は data classification を sensitivity (機密度) で 3-5 レベルに分けることを推奨。
+      religious-corp 文脈では: public (公開 charter), restricted (Adherent SBT-gated), encrypted
+      (XChaCha20 envelope per ADR-2605181100), tier-C-internal-only (ADR-2605262400) の 4 レベル
+      が事実上 deploy されています。
+    </p>
+    <p class="ref">参考: NIST SP 800-53 R5 AC family + NIST SP 800-162 ABAC, ISO 27002:2022 §5,
+      ADR-2605181100 encrypted envelope, ADR-2605262400 Tier-C carve-out</p>
+    <p>
+      <button class="calm-button"
+              data-cert-pathway="cisa"
+              data-domain="cisa-d5"
+              data-record-concept="d5-access-control-overview">
+        この概念を読んだことを記録
+      </button>
+    </p>
+  </article>
+
+  <footer class="calm-footer">
+    <p><a href="/">← entry</a> · <a href="/domains.html">domain 一覧</a> · <a href="/history.html">履歴を見る</a></p>
+  </footer>
+
+  <script src="/calm.js"></script>
+</body>
+</html>

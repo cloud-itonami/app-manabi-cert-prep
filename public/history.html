@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>history · manabi cert prep</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="stylesheet" href="/calm.css">
+</head>
+<body>
+  <header class="calm-header">
+    <span class="title"><a href="/" style="text-decoration:none;color:inherit;">manabi · cert prep</a></span>
+    <nav>
+      <a href="/domains.html">domains</a>
+      <a href="/history.html">history</a>
+    </nav>
+  </header>
+
+  <h1>あなたの学習履歴</h1>
+
+  <p>
+    この履歴は <strong>このブラウザ (localStorage)</strong> にのみ保存されています。
+    他の端末や他の adherent は閲覧できません。
+  </p>
+
+  <p>
+    chart や progress bar は意図的に表示していません — "あと N% で完了" のような
+    engagement-bait は G3 (反依存性 UX) で構造的に禁止されています。
+  </p>
+
+  <div id="history-root">
+    <p class="calm-list-meta">まだ学習履歴はありません。</p>
+  </div>
+
+  <h2>履歴の取扱い</h2>
+
+  <ul>
+    <li><strong>W0+W1 (現在)</strong> — localStorage のみ; ブラウザを clear すると消えます</li>
+    <li><strong>R1+ (今後)</strong> — XChaCha20-Poly1305 envelope (ADR-2605181100) で暗号化されて MST に保存; あなた本人の DID 鍵でしか復号できません</li>
+    <li><strong>分析公開</strong> — opt-in の aggregate のみ; k-anonymity ≥ 10 強制で、cohort が 10 人未満なら集計を抑制します (個別特定不可)</li>
+  </ul>
+
+  <p>
+    <button class="calm-button secondary" id="history-clear">この端末の履歴を削除する</button>
+  </p>
+
+  <div class="calm-notice">
+    <strong>R1 phase</strong> — Council Lv6+ ≥3 が ADR-2605264400 を ratify した後、
+    暗号化履歴の MST 同期 + LLM 支援 (judah LiteLLM gateway → baien-server-moemoekyun-*) が
+    有効になります。それまで、この履歴は localStorage 専用です。
+  </div>
+
+  <footer class="calm-footer">
+    <p><a href="/">← entry</a> · <a href="/domains.html">domain 一覧</a></p>
+  </footer>
+
+  <script src="/calm.js"></script>
+</body>
+</html>
