@@ -1,0 +1,29 @@
+{
+  "lexicon": 1,
+  "id": "com.etzhayyim.manabi.certPrepSession",
+  "description": "Per-session cert_prep attestation. STRUCTURAL ENFORCEMENT: G15 — no passRate / predictedScore / relativeRanking fields exist in this schema (negative-space enforcement); G16 — questionSource closed enum rejects official-vendor reproduction at PDS write time; G6 — under-18 inherits manabi master aggregate-only via learnerAgeBucket discriminator; encrypted-envelope-only for adult full detail per ADR-2605181100. Per ADR-2605264400.",
+  "defs": {
+    "main": {
+      "type": "record",
+      "record": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "sessionId": {"type": "string"},
+          "learnerDidOrPseudonym": {"type": "string", "description": "30-day rotating pseudonym for under-18 per ADR-2605181200; full DID for adult"},
+          "learnerAgeBucket": {"type": "string", "knownValues": ["minor", "adult"], "description": "G6 discriminator inherited from manabi master"},
+          "certPathway": {"type": "string", "knownValues": ["cisa", "cissp"], "description": "external credential body knowledge domain (manabi never issues; G17 partnership prohibited)"},
+          "domain": {"type": "string", "description": "CISA D1-D5 or CISSP D1-D8 within certPathway"},
+          "questionSource": {"type": "string", "knownValues": ["synthetic-baien-generated", "user-imported-personal-only"], "description": "G16 STRUCTURAL: closed enum; official-isaca-reproduced / official-isc2-reproduced / commercial-test-bank-reproduced are NOT valid members and any record carrying such value is schema-rejected"},
+          "questionSeedsAttempted": {"type": "array", "items": {"type": "string"}, "description": "deterministic sha256 seeds — regenerable; question text bodies are NOT persisted (privacy + copyright)"},
+          "conceptIdsReviewed": {"type": "array", "items": {"type": "string"}, "description": "CBK concept identifiers touched in this session"},
+          "sessionDurationMinutes": {"type": "integer"},
+          "sessionStartUtc": {"type": "string"},
+          "encryptedDetailCid": {"type": "string", "description": "Adult only — optional encrypted detail envelope (ADR-2605181100). FORBIDDEN for minors via cell-level validation. Detail body never includes question text, only seeds + concept ids + user notes."},
+          "timerModeOptedIn": {"type": "boolean", "description": "G10 default false (untimed); only true if user explicitly opted in to timer mode in Settings"}
+        },
+        "required": ["sessionId", "learnerDidOrPseudonym", "learnerAgeBucket", "certPathway", "domain", "questionSource", "sessionDurationMinutes", "sessionStartUtc"]
+      }
+    }
+  }
+}
