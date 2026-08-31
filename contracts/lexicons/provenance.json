@@ -1,0 +1,15 @@
+{
+  "note": "Vendored copies of the com.etzhayyim.manabi lexicons this app's constitutional gate tests assert against. Vendored — not referenced across repos — because a test that reads a sibling west project cannot run for anyone who clones only this repo, and cannot run in fleet CI at all (fleet ships one repo's tree). A test that cannot run reports the same 'nothing wrong' as a test that ran and found nothing.",
+  "source": {
+    "repo": "etzhayyim/actor-manabi",
+    "path": "wire/contracts/lexicons",
+    "commit": "9e143794201c3cc457cbbe5e9725bf9353c76f02",
+    "commit_date": "2026-07-18T16:14:54+09:00"
+  },
+  "vendored_at": "2026-08-31",
+  "digests": {
+    "certPrepSession.json": "0c6828c5514ffdb3172b2ac21bfc23689b8125f951856939c8001e024d3e02b6",
+    "domainMasteryAttestation.json": "6dfc0cf49b68348356a0f38877f4ba6693fe74330ba9c0209598b77558dace37"
+  },
+  "drift_policy": "tests/g18-lexicon-provenance.test.ts recomputes these digests. If you edit a vendored lexicon, the digest test goes red on purpose: change the upstream contract first, then re-vendor and update this file."
+}

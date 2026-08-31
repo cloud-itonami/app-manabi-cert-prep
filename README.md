@@ -4,7 +4,9 @@ manabi cert_prep adherent-facing knowledge-domain study PWA for **CISA / CISSP C
 
 **Status**: R0 scaffold; W0+W1 static UI only. **No LLM** at this phase.
 
-**ADR**: [ADR-2605264400](../../90-docs/adr/2605264400-manabi-cert-prep-subcell-r0.md) (sub-charter under [ADR-2605261045](../../90-docs/adr/2605261045-manabi-education-tier-b-actor-r0.md) manabi master).
+**ADR**: ADR-2605264400 (sub-charter) under ADR-2605261045 (manabi master). Both live in the
+`etzhayyim/actor-manabi` repo as `docs/adr/2605264400-manabi-cert-prep-subcell-r0.edn` and
+`docs/adr/2605261045-manabi-education-tier-b-actor-r0.edn` -- another repo, and `.edn`, not `.md`.
 
 ## What this app is — and is not
 
@@ -41,12 +43,16 @@ manabi cert_prep adherent-facing knowledge-domain study PWA for **CISA / CISSP C
 
 ## Local development
 
+See **[docs/operator-quickstart.md](docs/operator-quickstart.md)** — every command there
+was run against this repo and its result recorded, including the two traps (`wrangler` is
+not a devDependency, and the constitutional gates assert absences, so they need the
+vendored contracts present to mean anything).
+
 ```bash
-cd 60-apps/manabi-cert-prep
 npm install
 npm run typecheck   # tsc --noEmit
-npm run test        # vitest (anti-addiction structural tests)
-npm run dev         # wrangler dev — opens calm UI in browser
+npm test            # vitest -- 5 files / 19 tests, all green
+npx wrangler dev    # local server; `npm run dev` needs a global wrangler
 ```
 
 ## Constitutional gates
@@ -59,6 +65,11 @@ Inherited from manabi master (ADR-2605261045 G1..G14). Additionally:
 
 ## Lexicons
 
+Vendored under `contracts/lexicons/` (provenance and digests in
+`contracts/lexicons/provenance.json`; upstream is `etzhayyim/actor-manabi`
+`wire/contracts/lexicons`). They are vendored rather than referenced across repos so the
+G15/G16 gates can run against this repo's own tree.
+
 Under `com.etzhayyim.manabi.*`:
 
 - `certPrepSession` — per-session record; closed enum on `questionSource`
@@ -67,4 +78,4 @@ Under `com.etzhayyim.manabi.*`:
 
 ## License
 
-Apache-2.0 with [etzhayyim Charter Compliance Rider v2.0](../../CHARTER-RIDER.md) per ADR-2605192200.
+Apache-2.0 with the etzhayyim Charter Compliance Rider v2.0 per ADR-2605192200.

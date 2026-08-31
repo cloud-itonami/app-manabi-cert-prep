@@ -7,14 +7,9 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
+import { PWA_ROOT, readLexicon } from "./_lexicons";
 
-const PWA_ROOT = join(import.meta.dirname ?? __dirname, "..");
-const REPO_ROOT = join(PWA_ROOT, "..", "..");
 const PUBLIC_DIR = join(PWA_ROOT, "public");
-const LEXICON_PATH = join(
-  REPO_ROOT,
-  "orgs/etzhayyim/com-etzhayyim-manabi/wire/lexicons/certPrepSession.json",
-);
 
 function listFiles(dir: string, exts: string[]): string[] {
   const out: string[] = [];
@@ -32,7 +27,7 @@ function listFiles(dir: string, exts: string[]): string[] {
 
 describe("G16 no official past-question reproduction", () => {
   it("certPrepSession.questionSource enum is closed to exactly 2 allowed values", () => {
-    const lex = JSON.parse(readFileSync(LEXICON_PATH, "utf-8"));
+    const lex = readLexicon("certPrepSession");
     const qs = lex.defs.main.record.properties.questionSource;
     expect(qs).toBeDefined();
     expect(qs.knownValues).toBeDefined();

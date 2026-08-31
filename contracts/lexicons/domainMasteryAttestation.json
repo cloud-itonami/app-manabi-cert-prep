@@ -1,0 +1,26 @@
+{
+  "lexicon": 1,
+  "id": "com.etzhayyim.manabi.domainMasteryAttestation",
+  "description": "Subject-specific skillAttestation-family record. Replayable demonstration of competence on a specific CBK domain topic. STRUCTURAL ENFORCEMENT: credentialClaimedAttested const false — this is NOT a credential, it is a demonstration record (G7 + N13 negative-space enforcement). Used by L5 Vocation pathway gating (charters_compliance reviewer steward / toritate audit steward / Murakumo operator steward) per ADR-2605261000 — never the external credential possession. Per ADR-2605264400.",
+  "defs": {
+    "main": {
+      "type": "record",
+      "record": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "attestationId": {"type": "string"},
+          "subjectDid": {"type": "string", "description": "adherent whose demonstration is attested"},
+          "certPathway": {"type": "string", "knownValues": ["cisa", "cissp"]},
+          "domain": {"type": "string", "description": "CISA D1-D5 or CISSP D1-D8"},
+          "demonstrationType": {"type": "string", "knownValues": ["concept-explanation-recorded", "scenario-walkthrough-recorded", "peer-discussion-witnessed", "self-paced-question-set-completed"], "description": "G10 — all forms are self-paced demonstration, never time-limited high-stakes"},
+          "demonstrationArtifactCid": {"type": "string", "description": "IPFS CID of the demonstration record (audio / text / video transcript)"},
+          "witnessingDids": {"type": "array", "items": {"type": "string"}, "minItems": 0, "description": "optional peer witnesses; not required (self-paced demonstration is sufficient)"},
+          "credentialClaimedAttested": {"type": "boolean", "const": false, "description": "STRUCTURAL — this record never asserts an external credential. G7 + N13 negative-space enforcement"},
+          "issuedAtUtc": {"type": "string"}
+        },
+        "required": ["attestationId", "subjectDid", "certPathway", "domain", "demonstrationType", "demonstrationArtifactCid", "credentialClaimedAttested", "issuedAtUtc"]
+      }
+    }
+  }
+}
