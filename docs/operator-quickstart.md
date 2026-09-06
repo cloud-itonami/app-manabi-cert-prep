@@ -36,7 +36,7 @@ Exits 0 with no output.
 npm test              # vitest run
 ```
 
-**Expect `Test Files 5 passed (5) / Tests 19 passed (19)`.**
+**Expect `Test Files 6 passed (6) / Tests 28 passed (28)`.**
 
 These are not unit tests of behaviour. They are the structural gates from
 ADR-2605264400, and they assert *absences* — that the schema has no pass-rate
@@ -69,6 +69,27 @@ PY
 npm test          # -> G16 "questionSource enum is closed to exactly 2 allowed values" fails
 git checkout contracts/lexicons/certPrepSession.json
 ```
+
+The sixth file, `tests/pricing-invariants.test.ts`, is the same kind of gate
+pointed at `pricing.json`. It discriminates too, and on a file you can edit
+without touching a digest:
+
+```bash
+# claim a price for something nobody counts
+python3 - <<'PY'
+import json
+d = json.load(open("pricing.json"))
+d["plans"][2]["pricedDimensions"] = ["study-session"]
+json.dump(d, open("pricing.json", "w"), indent=2)
+PY
+npm test          # -> "every priced dimension is one the Worker actually meters" fails
+git checkout pricing.json
+```
+
+Each entry in `forbiddenDimensions` also carries a `schemaCheck`, and the reason
+it states is re-run against the vendored contract. Give one a name that does not
+exist and the suite fails rather than skipping it — an unchecked reason must not
+be able to look like a checked one.
 
 ## 4. Serve it locally
 
@@ -110,7 +131,9 @@ change that needs one of those to land needs the ADR amended first.
 |---|---|
 | Worker entry | `src/app.ts` |
 | Static UI | `public/` (`index.html`, `domains.html`, `history.html`, `study/*.html`) |
-| Constitutional gates | `tests/g3-*`, `tests/g15-*`, `tests/g16-*`, `tests/w1-*` |
+| Constitutional gates | `tests/g3-*`, `tests/g15-*`, `tests/g16-*`, `tests/g18-*`, `tests/w1-*` |
+| Commercial gate | `tests/pricing-invariants.test.ts` against `pricing.json` |
+| Price book / business model | `pricing.json`, `docs/business-model.md` |
 | Vendored contracts | `contracts/lexicons/` (+ `provenance.json`) |
 | Charter ADRs | `etzhayyim/actor-manabi` → `docs/adr/2605264400-manabi-cert-prep-subcell-r0.edn` (sub-charter) and `docs/adr/2605261045-manabi-education-tier-b-actor-r0.edn` (master) — another repo, and `.edn`, not `.md` |
 

@@ -1,0 +1,167 @@
+{
+  "$comment": [
+    "The price book. DATA, not code.",
+    "",
+    "The Worker emits no usage events and knows nothing about money. This file is",
+    "the only place a number lives, so a price change is a one-file edit and never a",
+    "deploy of the thing an adherent studies through.",
+    "",
+    "NOTHING HERE IS PUBLISHED. Every plan is status 'proposed' or 'free-permanent'",
+    "and every entry in billingGates is met:false. docs/business-model.md explains",
+    "each gate. Numbers exist so they can be argued with, not because anyone may be",
+    "billed from them.",
+    "",
+    "meteredDimensions is EMPTY ON PURPOSE. At W0/W1 every /xrpc/ route returns 503",
+    "ManabiCertPrepR1PhaseGateLocked (src/app.ts) and the Worker counts nothing. A",
+    "dimension listed here that the Worker does not actually count would be a promise",
+    "to invoice from a meter that does not exist. tests/pricing-invariants.test.ts",
+    "refuses that file rather than letting an invoice quote a number nobody measured.",
+    "",
+    "forbiddenDimensions is not decoration, and it is not a values statement either.",
+    "Each entry names the constitutional gate that already removed the behaviour the",
+    "unit would pay for. The two units the cert-prep market actually sells --",
+    "pass-rate uplift and an official past-question bank -- are the first two",
+    "entries, because G15 and G16 removed both at the schema level. A price per",
+    "either would re-create exactly what those gates exist to remove.",
+    "",
+    "The 'why' strings are checked, not merely written: pricing-invariants asserts",
+    "that the schema fact each one depends on is still true of the vendored lexicon."
+  ],
+
+  "pricingVersion": 1,
+  "currency": "JPY",
+  "updated": "2026-09-06",
+  "authority": "docs/business-model.md",
+
+  "phaseGate": "locked",
+
+  "meteredDimensions": [],
+
+  "candidateDimensions": [
+    {
+      "id": "study-session",
+      "describes": "one completed certPrepSession record (domain selected -> concepts reviewed -> session closed)",
+      "auditableByCustomer": true,
+      "meteredToday": false
+    },
+    {
+      "id": "domain-mastery-attestation",
+      "describes": "one domainMasteryAttestation demonstration record produced",
+      "auditableByCustomer": true,
+      "meteredToday": false
+    }
+  ],
+
+  "forbiddenDimensions": [
+    {
+      "id": "per-pass-rate-uplift",
+      "why": "G15 -- certPrepSession defines no passRate / predictedScore / estimatedPassProbability / cohortPercentile field, so there is no such quantity to sell; pricing one would require building the KPI the gate exists to remove",
+      "schemaCheck": "certPrepSession-has-no-pass-rate-fields"
+    },
+    {
+      "id": "per-official-question",
+      "why": "G16 -- questionSource is a closed enum of exactly synthetic-baien-generated and user-imported-personal-only; an official-vendor item bank is not a thing this schema can record, let alone invoice",
+      "schemaCheck": "certPrepSession-questionSource-enum-is-closed"
+    },
+    {
+      "id": "per-badge-or-streak",
+      "why": "G3 -- a price per badge or streak pays the operator to build engagement bait; tests/g3-no-addiction-ux-tokens.test.ts scans public/ for exactly those mechanics",
+      "schemaCheck": null
+    },
+    {
+      "id": "per-vendor-referral",
+      "why": "G17 -- no external credential body partnership, so there is no ISACA / (ISC)2 / CompTIA referral relationship to take a cut of",
+      "schemaCheck": null
+    },
+    {
+      "id": "per-credential-issued",
+      "why": "G7 + N13 -- domainMasteryAttestation carries credentialClaimedAttested const false; this app records demonstrations and never issues a credential, so there is nothing to charge issuance for",
+      "schemaCheck": "domainMasteryAttestation-credentialClaimedAttested-is-const-false"
+    },
+    {
+      "id": "per-timed-sitting",
+      "why": "G10 -- timerModeOptedIn defaults false and every demonstrationType is self-paced; selling timed sittings would make the timed path the product the untimed default exists to avoid",
+      "schemaCheck": "certPrepSession-timerMode-is-opt-in"
+    },
+    {
+      "id": "per-minor-seat",
+      "why": "G6 -- a minor is carried as a 30-day rotating pseudonym (learnerDidOrPseudonym), so there is no stable person to count; a seat price would require building the identity surface the design deliberately does not have",
+      "schemaCheck": "certPrepSession-has-learner-age-bucket"
+    }
+  ],
+
+  "billingGates": [
+    {
+      "id": "r1-phase-gate",
+      "description": "MANABI_CERT_PREP_R1_PHASE_GATE is no longer 'locked' in wrangler.jsonc",
+      "met": false
+    },
+    {
+      "id": "council-ratification",
+      "description": "Council Lv6+ >=3 ratify of ADR-2605264400, which src/app.ts names in the 503 body as the condition for R1",
+      "met": false
+    },
+    {
+      "id": "metering-exists",
+      "description": "the Worker actually counts study-session; today it emits no usage event of any kind",
+      "met": false
+    },
+    {
+      "id": "synthetic-question-provenance",
+      "description": "documented provenance that synthetic-baien-generated items reproduce no vendor item; G16 closes the enum but does not by itself prove what the generator emitted",
+      "met": false
+    },
+    {
+      "id": "operator-terms",
+      "description": "terms of service and 特定商取引法 disclosure for the operating entity",
+      "met": false
+    },
+    {
+      "id": "payment-rail",
+      "description": "a payment rail exists at all",
+      "met": false
+    }
+  ],
+
+  "plans": [
+    {
+      "id": "adherent",
+      "name": "Adherent",
+      "status": "free-permanent",
+      "audience": "the person studying",
+      "monthlyBase": 0,
+      "pricedDimensions": [],
+      "includedLexicons": [
+        "com.etzhayyim.manabi.certPrepSession",
+        "com.etzhayyim.manabi.domainMasteryAttestation"
+      ],
+      "why": "manabi is adherent-facing study infrastructure; a wall in front of the concept readers would price access to knowledge the charter exists to hand over"
+    },
+    {
+      "id": "operator-selfhost",
+      "name": "Operator — self-host",
+      "status": "free-permanent",
+      "audience": "宗教法人 / study circle running the Worker themselves",
+      "monthlyBase": 0,
+      "pricedDimensions": [],
+      "includedLexicons": [
+        "com.etzhayyim.manabi.certPrepSession",
+        "com.etzhayyim.manabi.domainMasteryAttestation"
+      ],
+      "why": "Apache-2.0 + Charter Compliance Rider; the real cost of entry is Council ratification and question provenance, neither of which is payable in money"
+    },
+    {
+      "id": "operator-managed",
+      "name": "Operator — managed tenancy",
+      "status": "proposed",
+      "audience": "operators who want the ratification honoured and the Worker run for them",
+      "monthlyBase": 30000,
+      "pricedDimensions": [],
+      "includedLexicons": [
+        "com.etzhayyim.manabi.certPrepSession",
+        "com.etzhayyim.manabi.domainMasteryAttestation"
+      ],
+      "why": "flat, with no usage component, because nothing is metered; the number prices provenance and ratification upkeep rather than compute -- static assets behind a thin dispatcher cost almost nothing to run -- and is a starting point for argument, not chargeable until every billingGate is met"
+    }
+  ]
+}
