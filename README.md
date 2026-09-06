@@ -51,7 +51,7 @@ vendored contracts present to mean anything).
 ```bash
 npm install
 npm run typecheck   # tsc --noEmit
-npm test            # vitest -- 5 files / 19 tests, all green
+npm test            # vitest -- 6 files / 28 tests, all green
 npx wrangler dev    # local server; `npm run dev` needs a global wrangler
 ```
 
@@ -62,6 +62,16 @@ Inherited from manabi master (ADR-2605261045 G1..G14). Additionally:
 - **G15** no pass-rate KPI (`silenEducationReview` cert_prep section rejects pass-rate fields)
 - **G16** no official past-question reproduction (closed enum in `certPrepSession.questionSource`)
 - **G17** no external credential body partnership
+
+The **commercial** surface has a gate of the same kind. `pricing.json` is the
+price book and `tests/pricing-invariants.test.ts` refuses it if it out-runs the
+product — if a plan is published while a billing gate is unmet, if it prices a
+unit the Worker does not meter, or if it prices a unit one of the gates above
+already removed. See **[docs/business-model.md](docs/business-model.md)**: the
+two things this market sells, pass-rate uplift and an official item bank, are
+both structurally absent from the schema, and the price book's stated reasons
+for refusing them are re-checked against the vendored lexicons rather than
+merely written down.
 
 ## Lexicons
 
